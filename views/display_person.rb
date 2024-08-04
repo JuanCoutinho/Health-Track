@@ -5,7 +5,7 @@ class DisplayPerson
     @person = person
   end
 
-  def display
+  def display # rubocop:disable Metrics/MethodLength
     puts <<~HEREDOC
       Informações de #{@person.nome}
       Nome: #{@person.nome}

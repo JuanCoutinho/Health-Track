@@ -61,7 +61,6 @@ class PersonsController
   end
 
   def person_csv
-    # Certifique-se de que @person é uma instância da classe Person
     CsvExporter.add_record(@person)
   end
 end

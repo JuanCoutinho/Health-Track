@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Person
-  ATTRIBUTES = %i[nome email weight height pas pad imc pam]
-  attr_accessor *ATTRIBUTES
+  ATTRIBUTES = %i[nome email weight height pas pad imc pam].freeze
+  attr_accessor(*ATTRIBUTES)
 
   def initialize; end
 

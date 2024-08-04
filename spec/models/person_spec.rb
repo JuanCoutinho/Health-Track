@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require './spec/models/spec_helper'
 require_relative '../../models/person'
+require 'simplecov'
 
 RSpec.describe Person do
   context '#calculate_imc' do
@@ -11,6 +13,19 @@ RSpec.describe Person do
       subject.calculate_imc
 
       expect(subject.imc).to eq(25.0)
+    end
+  end
+end
+
+describe Person do
+  describe '#calculate_pam' do
+    it 'returns 93.33 for pas 120 and pad 80' do
+      subject.pas = 120
+      subject.pad = 80
+
+      subject.calculate_pam
+
+      expect(subject.pam).to eq(93.33)
     end
   end
 end

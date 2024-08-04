@@ -2,8 +2,8 @@
 
 require 'simplecov'
 
-class Rspec
-  SimpleCov.start do
-    add_filter '/spec/'
-  end
+SimpleCov.start do
+  add_filter '/spec/'
 end
+
+require 'rspec'
