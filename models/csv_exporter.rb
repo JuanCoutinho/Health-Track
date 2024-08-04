@@ -22,7 +22,7 @@ class CsvExporter
     puts "Registro adicionado ao arquivo #{DATABASE_FILE}"
   end
 
-  def self.find(id)
+  def self.find(id) # rubocop:disable Metrics/MethodLength
     result = nil
 
     CSV.open(DATABASE_FILE, 'r') do |csv|
