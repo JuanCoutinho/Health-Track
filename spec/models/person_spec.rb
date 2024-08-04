@@ -15,11 +15,9 @@ RSpec.describe Person do
       expect(subject.imc).to eq(25.0)
     end
   end
-end
 
-describe Person do
-  describe '#calculate_pam' do
-    it 'returns 93.33 for pas 120 and pad 80' do
+  context '#calculate_pam' do
+    it 'returns 93.33 for pas 120 pad 80' do
       subject.pas = 120
       subject.pad = 80
 

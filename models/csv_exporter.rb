@@ -6,7 +6,8 @@ require 'fileutils'
 class CsvExporter
   DATABASE_FILE = 'database/people.csv'
 
-  def self.add_record(object) # rubocop:disable Metrics/AbcSize
+  def self.create(params) # rubocop:disable Metrics/AbcSize
+    object = to_object(params)
     registrations_dir = File.dirname(DATABASE_FILE)
     Dir.mkdir(registrations_dir) unless Dir.exist?(registrations_dir)
 
@@ -21,9 +22,32 @@ class CsvExporter
     puts "Registro adicionado ao arquivo #{DATABASE_FILE}"
   end
 
-  private # rubocop:disable Lint/UselessAccessModifier
+  def self.find(id)
+    result = nil
 
-  def self.next_id # rubocop:disable Lint/IneffectiveAccessModifier
+    CSV.open(DATABASE_FILE, 'r') do |csv|
+      continue = true
+      while continue
+        line = csv.readline
+        if line.first == id
+          continue = false
+          line.shift
+
+          params = self::ATTRIBUTES.zip(line).each_with_object({}) do |pair, acc|
+            acc[pair.first] = pair.last
+          end
+
+          result = to_object(params)
+        end
+        continue = false if line.nil?
+      end
+    end
+    result
+  end
+
+  # private
+
+  def self.next_id
     return 1 unless File.exist?(DATABASE_FILE) && !File.zero?(DATABASE_FILE)
 
     last_id = 0

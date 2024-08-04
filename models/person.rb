@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class Person
+class Person < Record
   ATTRIBUTES = %i[nome email weight height pas pad imc pam].freeze
   attr_accessor(*ATTRIBUTES)
 
-  def initialize; end
+  def initialize; end # rubocop:disable Lint/MissingSuper
 
   def calculate_imc
     return nil if @weight.nil? || @height.nil? || @height.zero?

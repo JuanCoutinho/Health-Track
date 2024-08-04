@@ -13,7 +13,7 @@ class PersonsController
       2 => { label: 'Calcular IMC', action: -> { input_imc  } },
       3 => { label: 'Calcular Pam', action: -> { input_pam  } },
       4 => { label: 'Exibir informações', action: -> { display_person } },
-      5 => { label: 'Salvar informações', action: -> { person_csv } }
+      5 => { label: 'Salvar informações', action: -> { create } }
     }
   end
 
@@ -28,7 +28,11 @@ class PersonsController
   end
 
   def display_person
-    view = DisplayPerson.new(@person)
+    puts 'Digite o id'
+    id = gets.chomp
+
+    person = Person.find(id)
+    view = DisplayPerson.new(person)
     view.display
   end
 
@@ -60,7 +64,11 @@ class PersonsController
     puts 'Não foi possível calcular o PAM. Verifique os valores fornecidos.'
   end
 
-  def person_csv
-    CsvExporter.add_record(@person)
+  def create
+    Person.create(person_params)
+  end
+
+  def person_params
+    @person.as_json
   end
 end
