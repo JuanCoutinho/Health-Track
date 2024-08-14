@@ -11,12 +11,12 @@ query = %(
          id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
          nome VARCHAR(45) NOT NULL,
          email VARCHAR(30) NOT NULL UNIQUE,
-         weight DECIMAL(4,2),
-         height DECIMAL(4,2),
-         pas DECIMAL(4,2),
-         pad DECIMAL(4,2),
-         imc DECIMAL(4,2),
-         pam DECIMAL(4,2)
+         weight DECIMAL(8,4),
+         height DECIMAL(8,4),
+         pas DECIMAL(8,4),
+         pad DECIMAL(8,4),
+         imc DECIMAL(8,4),
+         pam DECIMAL(8,4)
     )
 ) 
 

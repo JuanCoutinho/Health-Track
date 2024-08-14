@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Person < Record
+  SCHEMA = 'people'
   ATTRIBUTES = %i[nome email weight height pas pad imc pam].freeze
   attr_accessor(*ATTRIBUTES)
 

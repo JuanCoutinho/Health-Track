@@ -10,8 +10,8 @@ class PersonsController
   def options
     {
       1 => { label: 'Cadastrar pessoa', action: -> { fetch_person } },
-      2 => { label: 'Calcular IMC', action: -> { input_imc  } },
-      3 => { label: 'Calcular Pam', action: -> { input_pam  } },
+      2 => { label: 'Calcular IMC', action: -> { input_imc } },
+      3 => { label: 'Calcular PAM', action: -> { input_pam } },
       4 => { label: 'Exibir informações', action: -> { display_person } },
       5 => { label: 'Salvar informações', action: -> { create } }
     }
