@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PersonsController
+  include Inputs
   attr_reader :person
 
   def initialize
@@ -20,31 +21,19 @@ class PersonsController
   end
 
   def fetch_person
-    puts 'Digite seu nome:'
-    @person.nome = gets.chomp
-
-    puts 'Digite seu email:'
-    @person.email = gets.chomp
-
+    fetch_input
     puts 'Cadastrado com sucesso!'
   end
 
   def display_person
-    puts 'Digite o id'
-    id = gets.chomp
-
+    fecth_search
     person = Person.find(id)
     view = DisplayPerson.new(person)
     view.display
   end
 
   def input_imc
-    puts 'Digite seu peso (kg):'
-    @person.weight = gets.chomp.to_f
-
-    puts 'Digite sua altura (m):'
-    @person.height = gets.chomp.to_f
-
+    view_imc
     @person.calculate_imc
 
     return puts "Seu IMC é: #{@person.imc}" if @person.imc
@@ -53,12 +42,7 @@ class PersonsController
   end
 
   def input_pam
-    puts 'Digite seu PAS:'
-    @person.pas = gets.chomp.to_f
-
-    puts 'Digite seu PAD:'
-    @person.pad = gets.chomp.to_f
-
+    view_pam
     @person.calculate_pam
 
     return puts "Seu PAM é: #{@person.pam}" if @person.pam
@@ -71,14 +55,9 @@ class PersonsController
   end
 
   def edit
-    puts "Digite o ID da pessoa:"
-    id = gets.chomp.to_i
-    puts "Digite o novo nome:"
-    name = gets.chomp
-    puts "Digite a nova idade:"
-    age = gets.chomp.to_i
-  
-    person = PostgresExporter.update(id, nome: nome, email: email)
+    fecth_search
+    fetch_input
+    person = Person.update(id, nome: nome, email: email)
     puts "Pessoa atualizada: #{person}"
   end
 
@@ -86,7 +65,7 @@ class PersonsController
     puts "Digite o ID da pessoa:"
     id = gets.chomp.to_i
 
-    PostgresExporter.delete(id)
+    Person.delete(id)
   end
 
   def person_params
