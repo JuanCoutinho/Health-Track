@@ -13,7 +13,9 @@ class PersonsController
       2 => { label: 'Calcular IMC', action: -> { input_imc } },
       3 => { label: 'Calcular PAM', action: -> { input_pam } },
       4 => { label: 'Exibir informações', action: -> { display_person } },
-      5 => { label: 'Salvar informações', action: -> { create } }
+      5 => { label: 'Salvar informações', action: -> { create } },
+      6 => { label: 'Atualizar informações', action: -> { edit } },
+      7 => { label: 'Excluir informações', action: -> { destroy } }
     }
   end
 
@@ -66,6 +68,25 @@ class PersonsController
 
   def create
     Person.create(person_params)
+  end
+
+  def edit
+    puts "Digite o ID da pessoa:"
+    id = gets.chomp.to_i
+    puts "Digite o novo nome:"
+    name = gets.chomp
+    puts "Digite a nova idade:"
+    age = gets.chomp.to_i
+  
+    person = PostgresExporter.update(id, nome: nome, email: email)
+    puts "Pessoa atualizada: #{person}"
+  end
+
+  def destroy
+    puts "Digite o ID da pessoa:"
+    id = gets.chomp.to_i
+
+    PostgresExporter.delete(id)
   end
 
   def person_params
