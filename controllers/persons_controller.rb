@@ -27,7 +27,7 @@ class PersonsController
 
   def display_person
     fecth_search
-    person = Person.find(id)
+    person = Person.find(@id)
     view = DisplayPerson.new(person)
     view.display
   end
@@ -51,8 +51,8 @@ class PersonsController
   end
 
   def create
-    Person.create(person_params)
-  end
+    Person.create(@person.as_json)
+  end  
 
   def edit
     fecth_search

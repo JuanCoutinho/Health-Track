@@ -61,14 +61,23 @@ class PostgresExporter
   
   def self.find(id)
     conn = ::PG.connect(dbname: DATABASE)
-
+  
     query = %(
-      select * from #{self::SCHEMA} where id = #{id}
+      SELECT * FROM #{self::SCHEMA} WHERE id = #{id}
     )
+    
     object = nil
     conn.exec(query) do |result|
-      object = to_object(result.first.except('id').transform_keys(&:to_sym))
+      # Verifica se result.first é nil antes de chamar except
+      if result.ntuples > 0
+        first_row = result.first
+        object = to_object(first_row.transform_keys(&:to_sym).except(:id))
+      else
+        puts "Nenhum registro encontrado com o ID #{id}."
+      end
     end
+    
     object
   end
+  
 end
