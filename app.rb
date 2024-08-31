@@ -3,7 +3,7 @@
 require_relative 'models/csv_exporter'
 require_relative 'models/postgres_exporter'
 require_relative 'models/record'
-require_relative 'views/inputs.rb'
+require_relative 'views/inputs'
 require_relative 'controllers/persons_controller'
 require_relative 'models/person'
 require_relative 'views/display_person'

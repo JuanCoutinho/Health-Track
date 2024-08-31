@@ -52,7 +52,7 @@ class PersonsController
 
   def create
     Person.create(@person.as_json)
-  end  
+  end
 
   def edit
     fecth_search
@@ -62,7 +62,7 @@ class PersonsController
   end
 
   def destroy
-    puts "Digite o ID da pessoa:"
+    puts 'Digite o ID da pessoa:'
     id = gets.chomp.to_i
 
     Person.delete(id)
