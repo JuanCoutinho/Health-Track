@@ -24,7 +24,7 @@ class PostgresExporter
   
   def self.update(id, params)
     conn = ::PG.connect(dbname: DATABASE)
-    set_clause = params.map { |key, value| "#{key} = #{value.nil? ? 'NULL' : "'#{value.is_a?(Numeric) ? '%.2f' % value : value }'"}" }.join(', ')
+    set_clause = params.map { |key, value| "#{key} = #{value.nil? ? 'NULL' : "'#{value.is_a?(Numeric) ? '%.2f' % value : value }'"}" }.join(', ') # rubocop:disable Style/FormatString
 
     query = %(
       update #{self::SCHEMA}
