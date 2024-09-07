@@ -55,19 +55,38 @@ class PersonsController
   end
 
   def edit
-    fecth_search
+    fetch_search
     fetch_input
-    person = Person.update(id, nome: nome, email: email)
-    puts "Pessoa atualizada: #{person}"
+
+    # Use @id em vez de id
+    if Person.find(@id)
+      Person.update(@id, nome: @nome, email: @email)
+      puts "Pessoa atualizada com sucesso!"
+    else
+      puts "Pessoa com ID #{@id} não encontrada."
+    end
   end
 
   def destroy
     puts 'Digite o ID da pessoa:'
-    id = gets.chomp.to_i
+    @id = gets.chomp.to_i
 
-    Person.delete(id)
+    if Person.find(@id)
+      Person.delete(@id)
+      puts "Pessoa com ID #{@id} deletada com sucesso!"
+    else
+      puts "Pessoa com ID #{@id} não encontrada."
+    end
   end
 
+  private
+
+  def fetch_search
+    # Obtenha o ID da pessoa para editar
+    puts 'Digite o ID da pessoa que deseja editar:'
+    @id = gets.chomp.to_i
+  end
+  
   def person_params
     @person.as_json
   end

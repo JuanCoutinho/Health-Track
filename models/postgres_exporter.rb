@@ -4,26 +4,23 @@ require 'pg'
 
 class PostgresExporter
   DATABASE = 'test'
+  SCHEMA = 'people'
 
-  def self.create(params) # rubocop:disable Metrics/MethodLength
+  def self.create(params)
     conn = ::PG.connect(dbname: DATABASE)
 
-    vals = params.values.map { |val| format_value(val) }.join(', ')
+    columns = params.keys.join(', ')
+    values = params.values.map { |val| format_value(val) }.join(', ')
 
-    query = %(
-     insert into #{self::SCHEMA}(#{params.keys.join(', ')}) values (#{vals})
-    )
+    query = "INSERT INTO #{SCHEMA} (#{columns}) VALUES (#{values}) RETURNING id;"
 
-    object = nil
+    result = conn.exec(query)
+    id = result.first['id']
 
-    conn.exec(query) do |_result|
-      object = Person.new
-      params.each { |param| object.send("#{param.first}=", param.last) }
-    end
-    object
+    find(id)
   end
 
-  def self.update(id, params) # rubocop:disable Metrics/MethodLength
+  def self.update(id, params)
     conn = ::PG.connect(dbname: DATABASE)
 
     set_clause = params.map do |key, value|
@@ -31,11 +28,7 @@ class PostgresExporter
       "#{key} = #{formatted_value}"
     end.join(', ')
 
-    query = %(
-      update #{self::SCHEMA}
-      set #{set_clause}
-      where id = #{id}
-    )
+    query = "UPDATE #{SCHEMA} SET #{set_clause} WHERE id = #{id};"
 
     conn.exec(query)
     find(id)
@@ -44,9 +37,7 @@ class PostgresExporter
   def self.delete(id)
     conn = ::PG.connect(dbname: DATABASE)
 
-    query = %(
-      delete from #{self::SCHEMA} where id = #{id}
-    )
+    query = "DELETE FROM #{SCHEMA} WHERE id = #{id};"
 
     conn.exec(query)
   end
@@ -54,33 +45,34 @@ class PostgresExporter
   def self.find_last
     conn = ::PG.connect(dbname: DATABASE)
 
-    query = %(
-      select * from #{self::SCHEMA} order by id desc limit 1
-    )
-    object = nil
-    conn.exec(query) do |result|
-      object = result.first
-    end
-    object
+    query = "SELECT * FROM #{SCHEMA} ORDER BY id DESC LIMIT 1;"
+
+    result = conn.exec(query)
+    result.first
   end
 
-  def self.find(id) # rubocop:disable Metrics/MethodLength
+  def self.find(id)
     conn = ::PG.connect(dbname: DATABASE)
 
-    query = %(
-      SELECT * FROM #{self::SCHEMA} WHERE id = #{id}
-    )
+    query = "SELECT * FROM #{SCHEMA} WHERE id = #{id};"
 
-    object = nil
-    conn.exec(query) do |result|
-      # Verifica se result.first é nil antes de chamar except
-      if result.ntuples.positive?
-        first_row = result.first
-        object = to_object(first_row.transform_keys(&:to_sym).except(:id))
-      else
-        puts "Nenhum registro encontrado com o ID #{id}."
-      end
+    result = conn.exec(query)
+    if result.ntuples.positive?
+      to_object(result.first.transform_keys(&:to_sym))
+    else
+      puts "Nenhum registro encontrado com o ID #{id}."
+      nil
     end
-    object
+  end
+
+  def self.format_value(value)
+    return 'NULL' if value.nil?
+
+    value = value.to_s.gsub("'", "''")
+    "'#{value}'"
+  end
+
+  def self.to_object(attributes)
+    Person.new(attributes)
   end
 end
