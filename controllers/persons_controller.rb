@@ -57,8 +57,7 @@ class PersonsController
   def edit
     fetch_search
     fetch_input
-
-    # Use @id em vez de id
+    
     if Person.find(@id)
       Person.update(@id, nome: @nome, email: @email)
       puts "Pessoa atualizada com sucesso!"
@@ -79,10 +78,7 @@ class PersonsController
     end
   end
 
-  private
-
   def fetch_search
-    # Obtenha o ID da pessoa para editar
     puts 'Digite o ID da pessoa que deseja editar:'
     @id = gets.chomp.to_i
   end
