@@ -22,11 +22,7 @@ class PostgresExporter
 
   def self.update(id, params)
     conn = ::PG.connect(dbname: DATABASE)
-
-    set_clause = params.map do |key, value|
-      formatted_value = format_value(value)
-      "#{key} = #{formatted_value}"
-    end.join(', ')
+    set_clause = params.map { |key, value| "#{key} = #{value.nil? ? 'NULL' : "'#{value.is_a?(Numeric) ? '%.2f' % value : value }'"}" }.join(', ')
 
     query = "UPDATE #{SCHEMA} SET #{set_clause} WHERE id = #{id};"
 
