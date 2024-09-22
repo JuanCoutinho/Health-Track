@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require './spec/models/spec_helper'
+require_relative '../spec_helper'
+require_relative '../../models/postgres_exporter'
+require_relative '../../models/record'
 require_relative '../../models/person'
 require 'simplecov'
 
