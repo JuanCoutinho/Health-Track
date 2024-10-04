@@ -1,27 +1,49 @@
+# spec/models/menu_spec.rb
+
 # frozen_string_literal: true
 
-class Menu
-  def initialize(controller)
-    @controller = controller.new
+require_relative '../spec_helper'
+require_relative '../../models/menu'
 
-    @options = { 0 => { label: 'Sair', action: -> { end_app } } }
-    @options = @options.merge(@controller.options)
+class DummyController
+  def options
+    {
+      1 => { label: 'Option 1', action: -> { puts 'Action 1 executed.' } },
+      2 => { label: 'Option 2', action: -> { puts 'Action 2 executed.' } }
+    }
+  end
+end
 
-    @options.default = { action: -> { puts "Opção inválida.\n" } }
+RSpec.describe Menu do
+  subject(:menu) { Menu.new(DummyController) }
+
+  describe '#show_options' do
+    it 'displays the menu options' do
+      expected_output = "Digite uma das opções abaixo:\n1.Option 1\n2.Option 2\n0.Sair\n"
+      expect { menu.show_options }.to output(expected_output).to_stdout
+    end
   end
 
-  def show_options
-    puts 'Digite uma das opções abaixo:'
+  describe '#select_option' do
+    context 'when a valid option is selected' do
+      it 'executes the corresponding action' do
+        allow(menu).to receive(:gets).and_return('1')
+        expect { menu.select_option }.to output("Action 1 executed.\n").to_stdout
+      end
+    end
 
-    @options.each { |option| puts "#{option.first}.#{option.last[:label]}" }
-  end
+    context 'when an invalid option is selected' do
+      it 'displays an error message' do
+        allow(menu).to receive(:gets).and_return('99')
+        expect { menu.select_option }.to output("Opção inválida.\n").to_stdout
+      end
+    end
 
-  def select_option
-    @options[gets.chomp.to_i][:action].call
-  end
-
-  def end_app
-    puts 'Saindo...'
-    exit
+    context 'when the exit option is selected' do
+      it 'exits the application' do
+        allow(menu).to receive(:gets).and_return('0')
+        expect { menu.select_option }.to output("Saindo...\n").to_stdout
+      end
+    end
   end
 end
