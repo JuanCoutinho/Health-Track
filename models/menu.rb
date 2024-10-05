@@ -1,9 +1,7 @@
-# spec/models/menu_spec.rb
-
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
-require_relative '../../models/menu'
+require 'rspec'
+require_relative '../models/menu'
 
 class DummyController
   def options
@@ -18,8 +16,8 @@ RSpec.describe Menu do
   subject(:menu) { Menu.new(DummyController) }
 
   describe '#show_options' do
-    it 'displays the menu options' do
-      expected_output = "Digite uma das opções abaixo:\n1.Option 1\n2.Option 2\n0.Sair\n"
+    it 'displays the menu options correctly' do
+      expected_output = "Digite uma das opções abaixo:\n0. Sair\n1. Option 1\n2. Option 2\n"
       expect { menu.show_options }.to output(expected_output).to_stdout
     end
   end
