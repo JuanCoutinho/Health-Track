@@ -57,10 +57,10 @@ class PersonsController
   def edit
     fetch_search
     fetch_input
-    
+
     if Person.find(@id)
       Person.update(@id, nome: @nome, email: @email)
-      puts "Pessoa atualizada com sucesso!"
+      puts 'Pessoa atualizada com sucesso!'
     else
       puts "Pessoa com ID #{@id} não encontrada."
     end
@@ -82,7 +82,7 @@ class PersonsController
     puts 'Digite o ID da pessoa que deseja editar:'
     @id = gets.chomp.to_i
   end
-  
+
   def person_params
     @person.as_json
   end
