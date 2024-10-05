@@ -6,7 +6,7 @@ class PostgresExporter
   DATABASE = 'test'
   SCHEMA = 'people'
 
-  def self.create(params)
+  def self.create(params) # rubocop:disable Metrics/MethodLength
     conn = ::PG.connect(dbname: DATABASE)
 
     columns = params.keys.join(', ')
@@ -17,15 +17,15 @@ class PostgresExporter
     SQL
 
     conn.exec(query)
-    
+
     object = Person.new
     params.each { |key, value| object.send("#{key}=", value) }
-    
+
     conn.close
     object
   end
 
-  def self.update(id, params)
+  def self.update(id, params) # rubocop:disable Metrics/MethodLength
     conn = ::PG.connect(dbname: DATABASE)
 
     set_clause = params.map do |key, value|
@@ -78,10 +78,8 @@ class PostgresExporter
     result = conn.exec(query)
     conn.close
 
-    if result.any?
-      to_object(result.first)
-    else
-      nil
-    end
+    return unless result.any?
+
+    to_object(result.first)
   end
 end

@@ -6,7 +6,7 @@ class Record < PostgresExporter
       acc[attr] = send(attr)
     end
   end
-  
+
   def self.format_value(value)
     case value
     when String
