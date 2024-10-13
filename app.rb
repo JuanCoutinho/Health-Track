@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'models/services/person/calculate_imc_service'
+require_relative 'models/services/person/calculate_pam_service'
 require_relative 'models/modules/jsonable'
 require_relative 'models/modules/objectable'
 require_relative 'models/csv_exporter'
