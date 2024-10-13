@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'models/modules/jsonable'
+require_relative 'models/modules/objectable'
 require_relative 'models/csv_exporter'
 require_relative 'models/postgres_exporter'
 require_relative 'models/record'

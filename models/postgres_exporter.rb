@@ -82,4 +82,17 @@ class PostgresExporter
 
     to_object(result.first)
   end
+
+  def self.format_value(value)
+    case value
+    when String
+      "'#{PG::Connection.escape_string(value)}'"
+    when Numeric
+      value.to_s
+    when NilClass
+      'NULL'
+    else
+      raise "Unsupported value type: #{value.class}"
+    end
+  end
 end

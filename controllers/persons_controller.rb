@@ -55,11 +55,12 @@ class PersonsController
   end
 
   def edit
-    fetch_search
+    fecth_search
     fetch_input
-
+    nome = @nome || @person.nome
+    email = @email || @person.email
     if Person.find(@id)
-      Person.update(@id, nome: @nome, email: @email)
+      Person.update(@id, nome: nome, email: email)
       puts 'Pessoa atualizada com sucesso!'
     else
       puts "Pessoa com ID #{@id} não encontrada."

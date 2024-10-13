@@ -47,8 +47,7 @@ RSpec.describe PostgresExporter do # rubocop:disable Metrics/BlockLength
 
   describe '.find_last' do
     it 'returns the last Person' do
-      allow(connection).to receive(:exec).and_return(instance_double('PG::Result', any?: true,
-                                                                                   first: { 'name' => 'Last Person' }))
+      allow(connection).to receive(:exec).and_return(instance_double('PG::Result', any?: true, first: { 'name' => 'Last Person' }))
       person = PostgresExporter.find_last
       expect(person['name']).to eq('Last Person')
     end
@@ -56,8 +55,7 @@ RSpec.describe PostgresExporter do # rubocop:disable Metrics/BlockLength
 
   describe '.find' do
     it 'returns a Person object' do
-      allow(connection).to receive(:exec).and_return(instance_double('PG::Result', any?: true,
-                                                                                   first: { 'name' => 'John Doe' }))
+      allow(connection).to receive(:exec).and_return(instance_double('PG::Result', any?: true, first: { 'name' => 'John Doe' }))
       person = PostgresExporter.find(1)
       expect(person['name']).to eq('John Doe')
     end
