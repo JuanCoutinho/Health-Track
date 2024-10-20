@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'rspec'
-require_relative '../../models/menu'
+require 'spec_helper'
 
 class DummyController
   def options
