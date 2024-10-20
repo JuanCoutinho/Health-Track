@@ -1,4 +1,4 @@
-require_relative 'initializer'
+require_relative 'config/initializers'
 
 class App
   def call
