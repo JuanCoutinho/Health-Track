@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Record < PostgresExporter
+class Record < CsvExporter
   include Modules::Jsonable
   extend Modules::Objectable
 end

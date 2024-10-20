@@ -1,18 +1,4 @@
-# frozen_string_literal: true
-
-require_relative 'models/services/person/calculate_imc_service'
-require_relative 'models/services/person/calculate_pam_service'
-require_relative 'models/modules/jsonable'
-require_relative 'models/modules/objectable'
-require_relative 'models/csv_exporter'
-require_relative 'models/postgres_exporter'
-require_relative 'models/record'
-require_relative 'views/inputs'
-require_relative 'controllers/persons_controller'
-require_relative 'models/person'
-require_relative 'views/display_person'
-require_relative 'models/menu'
-require 'csv'
+require_relative 'initializer'
 
 class App
   def call
