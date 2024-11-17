@@ -16,7 +16,9 @@ query = %(
          pas DECIMAL(8,4),
          pad DECIMAL(8,4),
          imc DECIMAL(8,4),
-         pam DECIMAL(8,4)
+         pam DECIMAL(8,4),
+         gender VARCHAR(10),
+         age INTEGER
     )
 ) 
 

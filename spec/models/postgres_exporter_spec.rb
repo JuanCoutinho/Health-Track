@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rspec'
+require_relative '../spec_helper'
 require 'pg'
 require_relative '../../models/postgres_exporter'
 
