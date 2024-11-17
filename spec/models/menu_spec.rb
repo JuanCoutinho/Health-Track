@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
+require 'rspec'
 require_relative '../../models/menu'
 
 class DummyController

@@ -2,7 +2,6 @@
 
 require_relative '../spec_helper'
 require 'pg'
-require_relative '../../models/postgres_exporter'
 
 class Person
   attr_accessor :id, :name, :age
